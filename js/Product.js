@@ -1,7 +1,4 @@
 'use strict';
-
-import { EmptyValueException, InvalidAccessConstructorException } from "../../Recursos/MiTiendaV2-MT1.3/js/mitienda/exceptions";
-
 //Producto
 class Product {
     //Atributos
@@ -10,9 +7,9 @@ class Product {
     #description;
     #price;
     #tax;
-    #images = [];
+    #images;
     //Constructor
-    constructor(serialNumber,name,description = "N/S",price,tax = Product.tax,images){
+    constructor(serialNumber,name,description = "N/S",price,tax = Product.tax,images = []){
         if (!new.target) throw new InvalidAccessConstructorException();
         if (!serialNumber) throw new EmptyValueException("serialNumber");
         if (!name) throw new EmptyValueException("name");
@@ -64,5 +61,153 @@ class Product {
     static get tax(){
 		return 21;
 	}
+
+    get images(){
+        return this.#images;
+    }
+
+    set images(value){
+        if (!value) throw new EmptyValueException("images")
+        this.#images = value;
+    }
     
+}
+
+class Ropa extends Product{
+    //Atributos
+    #tejido;
+    #talla;
+    #marca;
+    constructor(serialNumber,name,description = "N/S",price,tax = Product.tax,images = [],tejido,talla,marca){
+        if (!new.target) throw new InvalidAccessConstructorException();
+        super(serialNumber,name,description = "N/S",price,tax = Product.tax,images = []);
+        //Validación
+        if (!tejido) throw new EmptyValueException("tejido");
+        if (!talla) throw new EmptyValueException("talla");
+        if (!marca) throw new EmptyValueException("marca");
+        //Asignacion
+        this.#tejido = tejido;
+        this.#talla = talla;
+        this.#marca = marca;
+    }
+    //Propiedades de acceso
+    get tejido (){
+        return this.#tejido
+    }
+
+    set tejido(value){
+        if (!value) throw new EmptyValueException("tejido");
+        this.#tejido = value;
+    }
+
+    get talla (){
+        return this.#talla
+    }
+
+    set talla(value){
+        if (!value) throw new EmptyValueException("talla");
+        this.#talla = value;
+    }
+
+    get marca (){
+        return this.#marca
+    }
+
+    set marca(value){
+        if (!value) throw new EmptyValueException("marca");
+        this.#marca = value;
+    }
+}
+
+class Joyas extends Product{
+    //Atributos
+    #material;
+    #talla;
+    #marca;
+    #tipo;
+    constructor(serialNumber,name,description = "N/S",price,tax = Product.tax,images = [],material,talla,marca,tipo){
+        if (!new.target) throw new InvalidAccessConstructorException();
+        super(serialNumber,name,description = "N/S",price,tax = Product.tax,images = []);
+        //Validación
+        if (!material) throw new EmptyValueException("material");
+        if (!talla) throw new EmptyValueException("talla");
+        if (!marca) throw new EmptyValueException("marca");
+        if (!tipo) throw new EmptyValueException("tipo");
+        //Asignacion
+        this.#material = material;
+        this.#talla = talla;
+        this.#marca = marca;
+        this.#tipo = tipo;
+    }
+    //Propiedades de acceso
+    get material (){
+        return this.#material
+    }
+
+    set material(value){
+        if (!value) throw new EmptyValueException("material");
+        this.#material = value;
+    }
+
+    get talla (){
+        return this.#talla
+    }
+
+    set talla(value){
+        if (!value) throw new EmptyValueException("talla");
+        this.#talla = value;
+    }
+
+    get marca (){
+        return this.#marca
+    }
+
+    set marca(value){
+        if (!value) throw new EmptyValueException("marca");
+        this.#marca = value;
+    }
+
+    get tipo (){
+        return this.#tipo
+    }
+
+    set tipo(value){
+        if (!value) throw new EmptyValueException("tipo");
+        this.#tipo = value;
+    }
+}
+
+class Instrumento extends Product{
+    //Atributos
+    #tipo;
+    #color;
+    constructor(serialNumber,name,description = "N/S",price,tax = Product.tax,images = [],tipo,color){
+        if (!new.target) throw new InvalidAccessConstructorException();
+        super(serialNumber,name,description = "N/S",price,tax = Product.tax,images = []);
+        //Validación
+        if (!tipo) throw new EmptyValueException("tipo");
+        if (!color) throw new EmptyValueException("color");
+        //Asignacion
+        this.#tipo = tipo;
+        this.#color = color;
+        
+    }
+    //Propiedades de acceso
+    get tipo (){
+        return this.#tipo
+    }
+
+    set tipo(value){
+        if (!value) throw new EmptyValueException("tipo");
+        this.#tipo = value;
+    }
+
+    get color (){
+        return this.#color
+    }
+
+    set color(value){
+        if (!value) throw new EmptyValueException("color");
+        this.#color = value;
+    }
 }

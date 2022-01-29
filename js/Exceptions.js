@@ -49,6 +49,8 @@ EmptyValueException.prototype = Object.create(BaseException.prototype, {
 	}
 });
 
+
+
 //Excepción de valor inválido
 function InvalidValueException(param, value) {
 	let instance = BaseException.call(this, "Error: The paramenter " + param + " has an invalid value. (" + param + ": " + value + ")");
@@ -81,10 +83,3 @@ AbstractClassException.prototype = Object.create(BaseException.prototype, {
 		configurable: false
 	}
 });
-
-export {BaseException,
-  InvalidAccessConstructorException,
-  EmptyValueException,
-  InvalidValueException,
-  AbstractClassException
-};
