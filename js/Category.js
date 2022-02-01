@@ -19,7 +19,7 @@ class Category {
     }
 
     set title(value) {
-        if (!value) throw new EmptyValueException();
+        if (!value) throw new EmptyValueException("title");
         this.#title = value;
     }
 
@@ -28,7 +28,7 @@ class Category {
     }
 
     set description(value){
-        if (!value) throw new EmptyValueException();
+        if (!value) throw new EmptyValueException("description");
         this.#description = value;
     }
 }

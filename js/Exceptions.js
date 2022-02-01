@@ -48,8 +48,36 @@ EmptyValueException.prototype = Object.create(BaseException.prototype, {
 		configurable: false
 	}
 });
-
-
+//El parametro ya existe
+function AlreadyExist(param) {
+	let instance = BaseException.call(this, "Error: The parameter " + param + " already exist.");
+	instance.name = "AlreadyExist";
+	instance.param = param;
+	return instance;
+}
+AlreadyExist.prototype = Object.create(BaseException.prototype, {
+	constructor: {
+		value: AlreadyExist,
+		enumerable: false,
+		writable: false,
+		configurable: false
+	}
+});
+//No existe el parametro
+function DontExist(param) {
+	let instance = BaseException.call(this, "Error: The parameter " + param + " dont exist.");
+	instance.name = "DontExist";
+	instance.param = param;
+	return instance;
+}
+DontExist.prototype = Object.create(BaseException.prototype, {
+	constructor: {
+		value: DontExist,
+		enumerable: false,
+		writable: false,
+		configurable: false
+	}
+});
 
 //Excepción de valor inválido
 function InvalidValueException(param, value) {
