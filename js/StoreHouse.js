@@ -1,3 +1,16 @@
+import {
+    BaseException,
+    InvalidAccessConstructorException,
+    EmptyValueException,
+    InvalidValueException,
+    AbstractClassException,
+    AlreadyExist,
+    DontExist
+} from './Exceptions.js';
+import { Product, Ropa, Joyas, Instrumento } from './Product.js';
+import {Coords} from './Coords.js';
+import {Store} from './Store.js';
+import {Category} from './Category.js';
 
 let StoreHouse = (function () { //La función anónima devuelve un método getInstance que permite obtener el objeto único
     let instantiated; //Objeto con la instancia única ShoppingCart
@@ -236,3 +249,5 @@ let StoreHouse = (function () { //La función anónima devuelve un método getIn
         }
     };
 })();
+
+export {StoreHouse};

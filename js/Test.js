@@ -1,3 +1,18 @@
+import {
+    BaseException,
+    InvalidAccessConstructorException,
+    EmptyValueException,
+    InvalidValueException,
+    AbstractClassException,
+    AlreadyExist,
+    DontExist
+} from './Exceptions.js';
+import { Product, Ropa, Joyas, Instrumento } from './Product.js';
+import {Coords} from './Coords.js';
+import {Store} from './Store.js';
+import {Category} from './Category.js';
+import {StoreHouse} from './StoreHouse.js';
+
 "use strict";
 function testCategory() {
     console.log("-------------------------------")
@@ -356,8 +371,8 @@ function testStoreHouse(){
 
 }
 
-testCategory();
-testStore();
-testCoords();
-testProduct();
-testStoreHouse();
+// testCategory();
+// testStore();
+// testCoords();
+// testProduct();
+// testStoreHouse();

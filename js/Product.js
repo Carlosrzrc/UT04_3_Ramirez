@@ -1,4 +1,11 @@
 'use strict';
+import { BaseException,
+    InvalidAccessConstructorException,
+    EmptyValueException,
+    InvalidValueException,
+    AbstractClassException,
+    AlreadyExist,
+    DontExist } from './Exceptions.js';
 //Producto
 class Product {
     //Atributos
@@ -228,3 +235,5 @@ class Instrumento extends Product{
 		return super.toString() + " Tipo: " + this.#tipo + " Color: " + this.#color;
 	}
 }
+
+export {Product,Ropa,Joyas,Instrumento}

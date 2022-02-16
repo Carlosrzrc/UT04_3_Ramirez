@@ -1,5 +1,15 @@
 'use strict';
 //Tienda
+import {
+    BaseException,
+    InvalidAccessConstructorException,
+    EmptyValueException,
+    InvalidValueException,
+    AbstractClassException,
+    AlreadyExist,
+    DontExist
+} from './Exceptions.js';
+import { Coords } from './Coords.js';
 class Store {
     //Atributos
     #CIF;
@@ -61,3 +71,5 @@ class Store {
         this.#coords = value;
     }
 }
+
+export { Store };

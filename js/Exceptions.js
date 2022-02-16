@@ -111,3 +111,12 @@ AbstractClassException.prototype = Object.create(BaseException.prototype, {
 		configurable: false
 	}
 });
+
+export {BaseException,
+	InvalidAccessConstructorException,
+	EmptyValueException,
+	InvalidValueException,
+	AbstractClassException,
+	AlreadyExist,
+	DontExist
+  };

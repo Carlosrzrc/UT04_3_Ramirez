@@ -1,4 +1,11 @@
 'use strict';
+import { BaseException,
+    InvalidAccessConstructorException,
+    EmptyValueException,
+    InvalidValueException,
+    AbstractClassException,
+    AlreadyExist,
+    DontExist } from './Exceptions.js';
 //Coordenadas
 class Coords {
     //Atributos
@@ -32,3 +39,4 @@ class Coords {
     }
 }
 
+export {Coords};

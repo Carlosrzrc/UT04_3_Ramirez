@@ -1,4 +1,11 @@
 'use strict';
+import { BaseException,
+    InvalidAccessConstructorException,
+    EmptyValueException,
+    InvalidValueException,
+    AbstractClassException,
+    AlreadyExist,
+    DontExist } from './Exceptions.js';
 //Categoria
 class Category {
     //Atributos
@@ -32,3 +39,5 @@ class Category {
         this.#description = value;
     }
 }
+
+export {Category};
