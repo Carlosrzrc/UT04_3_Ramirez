@@ -83,6 +83,8 @@ class StoreHouseController {
         this.onLoad();
         this.onInit();
 
+        this.#viewStoreHouse.bindInit(this.handleInit)
+
     }
 
     onLoad = () => {
@@ -91,7 +93,15 @@ class StoreHouseController {
 
     onInit = () => {
         this.#viewStoreHouse.init(this.#modelStoreHouse);
+        this.#viewStoreHouse.showCategoriesInMenu(this.#modelStoreHouse);
+        this.#viewStoreHouse.showStoresInMenu(this.#modelStoreHouse);
     }
+
+    handleInit = () => {
+        this.onInit();
+    }
+
+    
 
 }
 

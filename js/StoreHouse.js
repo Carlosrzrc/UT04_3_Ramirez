@@ -13,7 +13,7 @@ import {Store} from './Store.js';
 import {Category} from './Category.js';
 
 let StoreHouse = (function () { //La función anónima devuelve un método getInstance que permite obtener el objeto único
-    let instantiated; //Objeto con la instancia única ShoppingCart
+    let instantiated; //Objeto con la instancia única StoreHouse
 
     function init(name) { //Inicialización del Singleton
 
@@ -43,7 +43,6 @@ let StoreHouse = (function () { //La función anónima devuelve un método getIn
             }
             //ITERADOR CATEGORIAS
             get categories() {
-                let nextIndex = 0;
                 let array = this.#categories;
                 return {
                     *[Symbol.iterator]() {
@@ -54,8 +53,7 @@ let StoreHouse = (function () { //La función anónima devuelve un método getIn
                 }
             }
             //ITERADOR STORES
-            get stores() {
-                let nextIndex = 0;
+            get stores() {             
                 let array = this.#stores;
                 return {
                     *[Symbol.iterator]() {
@@ -169,8 +167,6 @@ let StoreHouse = (function () { //La función anónima devuelve un método getIn
             getCategoryProducts(category, typeProduct) {
                 //VALIDACION
                 if (!category) throw new EmptyValueException("category");
-
-                let nextIndex = 0;
                 let array = []
                 this.#stores.forEach(function (elem) { //recorremos #stores
                     elem.products.forEach(function (elem) { //recorremos los productos
@@ -217,8 +213,6 @@ let StoreHouse = (function () { //La función anónima devuelve un método getIn
             //ITERADOR DE PRODUCTOS POR TIENDA
             getStoreProducts(store, typeProduct) {
                 if (!store) throw new EmptyValueException("store");
-
-                let nextIndex = 0;
                 let array = []
                 let pos = this.#stores.findIndex(elem => elem.store.CIF == store.CIF);//posicion de la tienda
                 this.#stores[pos].products.forEach(x => array.push({ product: x.product, stock: x.stock }))//recorremos los productos de la tienda y los añadimos al array con su stock
