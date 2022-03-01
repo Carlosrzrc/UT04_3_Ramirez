@@ -8,9 +8,9 @@ import {
     DontExist
 } from './Exceptions.js';
 import { Product, Ropa, Joyas, Instrumento } from './Product.js';
-import {Coords} from './Coords.js';
-import {Store} from './Store.js';
-import {Category} from './Category.js';
+import { Coords } from './Coords.js';
+import { Store } from './Store.js';
+import { Category } from './Category.js';
 
 let StoreHouse = (function () { //La función anónima devuelve un método getInstance que permite obtener el objeto único
     let instantiated; //Objeto con la instancia única StoreHouse
@@ -53,8 +53,9 @@ let StoreHouse = (function () { //La función anónima devuelve un método getIn
                 }
             }
             //ITERADOR STORES
-            get stores() {             
-                let array = this.#stores;
+            get stores() {
+                let array = [];
+                this.#stores.forEach(elem => array.push(elem.store));
                 return {
                     *[Symbol.iterator]() {
                         for (let product of array) {
@@ -215,7 +216,7 @@ let StoreHouse = (function () { //La función anónima devuelve un método getIn
                 if (!store) throw new EmptyValueException("store");
                 let array = []
                 let pos = this.#stores.findIndex(elem => elem.store.CIF == store.CIF);//posicion de la tienda
-                this.#stores[pos].products.forEach(x => array.push({ product: x.product, stock: x.stock }))//recorremos los productos de la tienda y los añadimos al array con su stock
+                this.#stores[pos].products.forEach(x => array.push({ product: x.product, stock: x.stock }))//recorremos los productos de la tienda y los añadimos al array con su stock    
                 return {
                     *[Symbol.iterator]() {
                         for (let product of array) {
@@ -225,6 +226,16 @@ let StoreHouse = (function () { //La función anónima devuelve un método getIn
                 }
             }
 
+            getProduct(serial) {
+                for (let i of this.#stores) {
+                    for (let x of i.products) {
+                        if (x.product.serialNumber == serial) {
+                            return x.product;
+                        }
+                    }
+                }
+
+            }
 
 
         }
@@ -244,4 +255,4 @@ let StoreHouse = (function () { //La función anónima devuelve un método getIn
     };
 })();
 
-export {StoreHouse};
+export { StoreHouse };

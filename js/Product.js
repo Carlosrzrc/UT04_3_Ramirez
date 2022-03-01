@@ -91,7 +91,7 @@ class Ropa extends Product{
     #marca;
     constructor(serialNumber,name,description = "N/S",price,tax = Product.tax,images = [],tejido,talla,marca){
         if (!new.target) throw new InvalidAccessConstructorException();
-        super(serialNumber,name,description = "N/S",price,tax = Product.tax,images = []);
+        super(serialNumber,name,description,price,tax,images);
         //Validación
         if (!tejido) throw new EmptyValueException("tejido");
         if (!talla) throw new EmptyValueException("talla");
@@ -143,7 +143,7 @@ class Joyas extends Product{
     #tipo;
     constructor(serialNumber,name,description = "N/S",price,tax = Product.tax,images = [],material,talla,marca,tipo){
         if (!new.target) throw new InvalidAccessConstructorException();
-        super(serialNumber,name,description = "N/S",price,tax = Product.tax,images = []);
+        super(serialNumber,name,description,price,tax,images);
         //Validación
         if (!material) throw new EmptyValueException("material");
         if (!talla) throw new EmptyValueException("talla");
@@ -203,7 +203,7 @@ class Instrumento extends Product{
     #color;
     constructor(serialNumber,name,description = "N/S",price,tax = Product.tax,images = [],tipo,color){
         if (!new.target) throw new InvalidAccessConstructorException();
-        super(serialNumber,name,description = "N/S",price,tax = Product.tax,images = []);
+        super(serialNumber,name,description,price,tax,images);
         //Validación
         if (!tipo) throw new EmptyValueException("tipo");
         if (!color) throw new EmptyValueException("color");
