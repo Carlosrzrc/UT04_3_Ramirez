@@ -131,7 +131,6 @@ class StoreHouseView {
       </div>`)
                 break;
         }
-
         this.ficha.append(container);
     }
 
