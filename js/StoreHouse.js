@@ -64,6 +64,25 @@ let StoreHouse = (function () { //La función anónima devuelve un método getIn
                     }
                 }
             }
+            //ITERADOR PRODUCTOS
+            get products() {
+                let array = [];
+                for (let i of this.#stores) {
+                    if (i.store.CIF == 1) {
+                        for (let x of i.products) {
+                            array.push(x.product);
+                        }
+                    }
+
+                }
+                return {
+                    *[Symbol.iterator]() {
+                        for (let product of array) {
+                            yield product;
+                        }
+                    }
+                }
+            }
             //AÑADIR CATEGORY
             addCategory(category) {
                 //VALIDACION
@@ -235,6 +254,14 @@ let StoreHouse = (function () { //La función anónima devuelve un método getIn
                     }
                 }
 
+            }
+
+            getCategory(title) {
+                for (let cat of this.#categories) {
+                    if (cat.title == title) {
+                        return cat;
+                    }
+                }
             }
 
 

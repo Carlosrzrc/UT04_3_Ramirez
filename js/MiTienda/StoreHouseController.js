@@ -31,9 +31,9 @@ class StoreHouseController {
         let store3 = new Store(4, "Imaginarium");
         let store4 = new Store(5, "HyM");
         //PRODUCTOS
-        let product1 = new Product(1, "Citroen C5", "Coche berlina", 5000,21,"../../img/c5.jpg");
-        let product11 = new Product(11, "Audi A5", "Coche deportivo", 8000,21,"../../img/a5.jpg");
-        let product12 = new Product(12, "Mercedes B5", "Coche lujo", 15000,21,"../../img/mercedes.webp");
+        let product1 = new Product(1, "Citroen C5", "Coche berlina", 5000, 21, "../../img/c5.jpg");
+        let product11 = new Product(11, "Audi A5", "Coche deportivo", 8000, 21, "../../img/a5.jpg");
+        let product12 = new Product(12, "Mercedes B5", "Coche lujo", 15000, 21, "../../img/mercedes.webp");
         let product2 = new Ropa(2, "Air coat", "Abrigo tipo air", 80, 21, "../../img/air.jpeg", "algodon", "S", "Nike");
         let product3 = new Ropa(3, "Earth coat", "Abrigo tipo earth", 80, 21, "../../img/earthcoat.jpg", "algodon", "M", "Nike");
         let product4 = new Ropa(4, "Water coat", "Abrigo tipo water", 80, 21, "../../img/watercoat.jpg", "algodon", "XL", "Nike");
@@ -89,20 +89,21 @@ class StoreHouseController {
         this.#viewStoreHouse.bindProductsCategoryList(this.handleProductsStore);
         this.#viewStoreHouse.bindProduct(this.handleProduct);
         this.#viewStoreHouse.bindProductCategory(this.handleCategory);
-
+        this.#viewStoreHouse.bindShowNewWindow(this.handleShowProductInNewWindow);
+        this.#viewStoreHouse.bindClose(this.handleCloseWindow);
 
     }
 
     onLoad = () => {
         this.#loadObjects();
+        this.#viewStoreHouse.showMenu();
+        this.#viewStoreHouse.bindFormAddCategory(this.handleNewCategoryForm, this.handleRemoveCategoryForm, this.handleNewStoreForm, this.handleRemoveStoreForm, this.handleRemoveProductForm);
     }
 
     onInit = () => {
         this.#viewStoreHouse.init(this.#modelStoreHouse.stores);
         this.#viewStoreHouse.showCategoriesInMenu(this.#modelStoreHouse.categories);
         this.#viewStoreHouse.showStoresInMenu(this.#modelStoreHouse.stores);
-
-
     }
 
     handleInit = () => {
@@ -115,13 +116,139 @@ class StoreHouseController {
 
     handleProduct = (product) => {
         this.#viewStoreHouse.showProduct(this.#modelStoreHouse.getProduct(product));
+
     }
 
     handleCategory = (category) => {
         this.#viewStoreHouse.showProductsCategories(this.#modelStoreHouse.getCategoryProducts(new Category(category)));
     }
 
+    handleShowProductInNewWindow = (product) => {
+        this.#viewStoreHouse.showProductInNewWindow(this.#modelStoreHouse.getProduct(product));
+    }
 
+    handleCloseWindow = () => {
+        this.#viewStoreHouse.closeWindows();
+    }
+
+
+
+    handleNewCategoryForm = () => {
+        this.#viewStoreHouse.ShowNewCategoryForm();
+        this.#viewStoreHouse.bindNewCategoryForm(this.handleCreateCategory);
+    }
+
+    handleCreateCategory = (title, desc) => {
+        let cat = new Category(title, desc);
+        cat.description = desc;
+        let done, error;
+        try {
+            this.#modelStoreHouse.addCategory(cat);
+            done = true;
+        } catch (exception) {
+            done = false;
+            error = exception;
+        }
+        this.#viewStoreHouse.showNewCategoryModal(done, cat, error);
+        this.#viewStoreHouse.showCategoriesInMenu(this.#modelStoreHouse.categories); //Mostrar
+    }
+
+
+
+    handleRemoveCategoryForm = () => {
+        this.#viewStoreHouse.showRemoveCategoryForm(this.#modelStoreHouse.categories);
+        this.#viewStoreHouse.bindRemoveCategoryForm(this.handleRemoveCategory);
+    }
+
+    handleRemoveCategory = (title, position) => {
+        let done, error, cat;
+        try {
+            cat = this.#modelStoreHouse.getCategory(title);
+            this.#modelStoreHouse.removeCategory(cat);
+            done = true;
+        } catch (exception) {
+            done = false;
+            error = exception;
+        }
+        this.#viewStoreHouse.showRemoveCategoryModal(done, cat, position, error);
+        this.#viewStoreHouse.showRemoveCategoryForm(this.#modelStoreHouse.categories);
+        this.#viewStoreHouse.bindRemoveCategoryForm(this.handleRemoveCategory);
+        this.#viewStoreHouse.showCategoriesInMenu(this.#modelStoreHouse.categories);
+    }
+
+    handleNewStoreForm = () => {
+        this.#viewStoreHouse.ShowNewStoreForm();
+        this.#viewStoreHouse.bindNewStoreForm(this.handleCreateStore);
+    }
+
+    handleCreateStore = (CIF, name, addres, tlf, coords) => {
+        let arrCord = coords.split("-");
+        let store = new Store(CIF, name, addres, tlf, new Coords(arrCord[0],arrCord[1]));
+        let done, error;
+        try {
+            this.#modelStoreHouse.addStore(store);
+            done = true;
+        } catch (exception) {
+            done = false;
+            error = exception;
+        }
+        console.log(done);
+        this.#viewStoreHouse.showNewStoreModal(done, store, error);
+        this.#viewStoreHouse.showStoresInMenu(this.#modelStoreHouse.stores); //Mostrar
+    }
+
+    handleRemoveStoreForm = () => {
+        this.#viewStoreHouse.showRemoveStoreForm(this.#modelStoreHouse.stores);
+        this.#viewStoreHouse.bindRemoveStoreForm(this.handleRemoveStore);
+    }
+
+    handleRemoveStore = (CIF, position) => {
+        let done, error, store;
+        try {
+            for (let i of this.#modelStoreHouse.stores) {
+                if (i.CIF == CIF){
+                    store = i;
+                }
+            }
+            this.#modelStoreHouse.removeStore(store);
+            done = true;
+        } catch (exception) {
+            done = false;
+            error = exception;
+        }
+        this.#viewStoreHouse.showRemoveStoreModal(done, store, position, error);
+        this.#viewStoreHouse.showRemoveStoreForm(this.#modelStoreHouse.stores);
+        this.#viewStoreHouse.bindRemoveStoreForm(this.handleRemoveStore);
+        this.#viewStoreHouse.showStoresInMenu(this.#modelStoreHouse.stores);
+
+    }
+
+    handleRemoveProductForm = () => {
+        this.#viewStoreHouse.showRemoveProductForm(this.#modelStoreHouse.products);
+        this.#viewStoreHouse.bindRemoveProductForm(this.handleRemoveProduct);
+    }
+
+    handleRemoveProduct = (serialNumber, position) => {
+        console.log(serialNumber);
+        let done, error, product;
+        try {
+            for (let i of this.#modelStoreHouse.products) {
+                if (i.serialNumber == serialNumber){
+                    product = i;
+                }
+            }
+            this.#modelStoreHouse.removeProduct(product);
+            done = true;
+        } catch (exception) {
+            done = false;
+            error = exception;
+        }
+        console.log(done);
+        this.#viewStoreHouse.showRemoveProductModal(done, product, position, error);
+        this.#viewStoreHouse.showRemoveProductForm(this.#modelStoreHouse.products);
+        this.#viewStoreHouse.bindRemoveProductForm(this.handleRemoveProduct);
+
+    }
 }
 
 export { StoreHouseController };
