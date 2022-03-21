@@ -1,5 +1,5 @@
 import { StoreHouse } from "../StoreHouse.js";
-import { defaultCheckElement, newCategoryValidation , newStoreValidation } from "../validation.js";
+import { defaultCheckElement, newCategoryValidation, newStoreValidation, LoginValidation, getCookie, setCookie } from "../validation.js";
 
 class StoreHouseView {
   constructor() {
@@ -10,7 +10,7 @@ class StoreHouseView {
     this.productWindow = [];
 
   }
-
+  //INICIO TIENDAS MAIN
   init(stores) {
     this.main.empty();
     let titulo = $(`<div><h1 class="text-center">TIENDAS</h1></div>`)
@@ -28,9 +28,8 @@ class StoreHouseView {
     this.main.append(titulo);
     this.main.append(container);
   }
-
+  //MUESTRA CATEGORIAS EN NAVBAR
   showCategoriesInMenu(categories) {
-
     let menu = $('#categorias');
     menu.empty();
     for (let category of categories) {
@@ -38,7 +37,7 @@ class StoreHouseView {
                 `)
     }
   }
-
+//MUESTRA TIENDAS EN NAVBAR
   showStoresInMenu(stores) {
     let menu = $('#stores');
     menu.empty();
@@ -46,6 +45,104 @@ class StoreHouseView {
       menu.append(`<li><a data-store="${store.CIF}" class="dropdown-item" href="#titulo">${store.name}</a></li>
                 `)
     }
+  }
+  //BOTON LOGIN MUESTRA FORMULARIO
+  showLogin() {
+    this.main.empty();
+    this.section.empty();
+    this.ficha.empty();
+    let container = $(`<div class="formulario" id="form" style="background-color: rgb(111, 212, 150); center; padding: 6%; margin: 3% 30%"> 
+    <form name="login" class="row g-3" style="background-color: white; padding: 5%;">
+    <h1 style="text-align: center;">LOGIN</h1>
+    <div class="col-12">
+        <label for="nombre" class="form-label">Nombre: *</label>
+        <input type="text" class="form-control" id="nombre" required>
+        <div class="invalid-feedback">El nombre es obligatorio</div>
+            <div class="valid-feedback">Correcto.</div>
+    </div>
+    <div class="col-12">
+        <label for="pass" class="form-label">Contraseña: *</label>
+        <input type="password" class="form-control" id="pass" required>
+        <div class="invalid-feedback">La contraseña es obligatoria</div>
+            <div class="valid-feedback">Correcto.</div>
+    </div>
+    <div class="text-center">
+    <button type="submit" class="btn btn-primary">Login</button>
+        <button type="reset" class="btn btn-primary">Cancelar</button>
+        </div>
+</form>`);
+    this.main.append(container);
+  }
+  //MODAL DE ERROR AL LOGEAR
+  showModalLoginError() {
+    let modal = $(`<div style="color: red;" class="modal fade" id="loginError" tabindex
+   ="-1"
+    data-backdrop="static" data-keyboard="false" role="dialog" arialabelledby="loginError" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+    <h5 class="modaltitle" id="loginError">Error credenciales</h5>
+    <button type="button" class="close" datadismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+    Las credenciales de acceso son incorrectas
+    </div>
+    <div class="modal-footer">
+    <button type="button" class="btn btn-primary" datadismiss="modal">Aceptar</button>
+    </div>
+    </div>
+    </div>
+    </div>`);
+    $('body').append(modal);
+    let loginError = $('#loginError');
+    loginError.modal('show');
+    loginError.find('button').click(() => {
+      loginError.on('hidden.bs.modal', function (event) {
+        document.login.reset();
+        document.login.name.focus();
+        this.remove();
+      });
+      loginError.modal('hide');
+    })
+  }
+
+  //VALIDADOR DE LOGIN
+  bindLoginForm(handler) {
+    LoginValidation(handler);
+  }
+  //BIND DE MOSTRAR LOGIN
+  bindShowLogin(handler) {
+    $('#login').click((event) => {
+      handler();
+    });
+  }
+
+  //COOKIES
+  createCookies(nombre, pass) {
+    document.cookie = 'Nombre =' + nombre;
+  }
+
+  checkCookie() {
+    let co = getCookie("Nombre");
+    if (getCookie("Nombre") != "") {
+      let h = $('#showlogin');
+      h.empty();
+      h.append(`<div style="color: white">
+    <h5>Hola ${co}</h5>
+    <a href="#" id="outsesion" class="btn btn-danger btn-sm">Cerrar sesión</a></div>`);
+    }
+  }
+
+  deleteCookie() {
+    setCookie("Nombre", '', -1);
+  }
+
+  bindDeleteCookie(handler) {
+    $(document).on('click', "#outsesion", function (event) {
+      handler(handler);
+    });
   }
 
   showMenu() {
@@ -56,8 +153,47 @@ class StoreHouseView {
     <li><a class="dropdown-item" id="delC">Eliminar categoria</a></li>
     <li><a class="dropdown-item" id="inT">Insertar tienda</a></li>
     <li><a class="dropdown-item" id="delT">Eliminar tienda</a></li>
+    <li><a class="dropdown-item" id="gen">Generar backup</a></li>
     `)
   }
+  //BACKUP
+  bindBackUp(handler) {
+    $('#gen').click(function (event) {
+      handler(handler);
+    });
+  }
+
+  createBackUp() {
+    const promise = new Promise((resolve, reject) => {
+      const request = new XMLHttpRequest();
+      request.open('GET', '../../objects.json');
+      request.onload = () => {
+        if (request.status === 200) {
+          resolve(request.response); // Obtenemos los datos para resolver la Promesa
+        } else {
+          reject(new Error(request.statusText)); // Obtenemos el error pasándo como argumento el texto.
+        }
+      };
+      request.onerror = () => {
+        reject(new Error('Error fetching data.')); // Se ha producido un error, rechazamos la promesa
+      };
+      request.send(); // Enviamos la petición
+    });
+    promise.then((data) => { // data contiene la respuesta
+      //INTENTO CREACION FICHERO
+      // let time = Date.now();
+      // let fecha = new Date(time);
+      // fecha = fecha.toISOString();
+      // let error = new File([data],fecha+'.json');
+      // let imageURL = window.URL.createObjectURL(error);
+      // console.log(error);
+    }, (error) => { // error contiene el objeto creado para rechazar la prome
+      sa
+      console.log('Promise rejected.');
+      addMessage(error.message);
+    });
+  }
+
   //FORMULARIO
   ShowNewCategoryForm() {
     this.main.empty();
@@ -86,7 +222,7 @@ class StoreHouseView {
 </div>`);
     this.main.append(container);
   }
-
+  //MENU FORMULARIOS
   bindFormAddCategory(handler, remove, addT, delT, delP) {
     $('#inC').click(function (event) {
       handler(handler);
@@ -287,7 +423,7 @@ class StoreHouseView {
       handler(this.dataset.store, $(this).closest('div.cat').index());
     })
   }
-//REMOVE PRODUCT
+  //REMOVE PRODUCT
   showRemoveProductForm(products) {
     this.main.empty();
     this.section.empty();
@@ -447,7 +583,11 @@ class StoreHouseView {
 
 
 
-  showProductsStore(products) {
+  showProductsStore(products, isMainEmpty) {
+    if (isMainEmpty) {
+      this.main.empty();
+    }
+
     this.section.empty();
     this.ficha.empty();
     let titulo = $(`<div id="titulo"><h1 class="text-center">PRODUCTOS</h1></div>`)
@@ -565,7 +705,6 @@ class StoreHouseView {
     this.section.append(container);
     let tb = $('#tb');
     for (let product of products) {
-      console.log(product);
       tb.append(`               
               <tr>
                 <th scope="row"></th>
@@ -680,10 +819,10 @@ class StoreHouseView {
 
   bindProductsCategoryList(handler) {
     $('main').find('a').click(function (event) {
-      handler(this.dataset.store);
+      handler(this.dataset.store, false);
     });
     $('#stores').find('a').click(function (event) {
-      handler(this.dataset.store);
+      handler(this.dataset.store, true);
     });
   }
 

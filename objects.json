@@ -1,0 +1,169 @@
+{
+    "categories": [
+        {
+            "name":"Abrigos"
+        },
+        {
+            "name":"Anillos"
+        },
+        {
+            "name":"Musica"
+        },
+        {
+            "name":"Coches"
+        }
+    ],
+    "stores": [
+        {
+            "CIF":2,
+            "name":"Pull And Bear"
+        },
+        {
+            "CIF":3,
+            "name":"Zara"
+        },
+        {
+            "CIF":4,
+            "name":"Imaginarium"
+        },
+        {
+            "CIF":5,
+            "name":"HyM"
+        }
+    ],
+    "products": [
+        {
+            "serialNumber":1,
+            "name":"Citroen C5",
+            "description":"Coche Berlina",
+            "price":5000,
+            "tax":21,
+            "images":"../../img/c5.jpg"
+        },
+        {
+            "serialNumber":11,
+            "name":"Audi A5",
+            "description":"Coche deportivo",
+            "price":8000,
+            "tax":21,
+            "images":"../../img/a5.jpg"
+        },
+        {
+            "serialNumber":12,
+            "name":"Mercedes B5",
+            "description":"Coche lujo",
+            "price":15000,
+            "tax":21,
+            "images":"../../img/mercedes.webp"
+        }
+    ],
+    "ropas": [
+        {
+            "serialNumber":2,
+            "name":"Air coat",
+            "description":"Abrigo tipo air",
+            "price":80,
+            "tax":21,
+            "images":"../../img/air.jpeg",
+            "tejido":"algodon",
+            "talla":"S",
+            "marca":"Nike"  
+        },
+        {
+            "serialNumber":3,
+            "name":"Earth coat",
+            "description":"Abrigo tipo earth",
+            "price":80,
+            "tax":21,
+            "images":"../../img/earthcoat.jpg",
+            "tejido":"algodon",
+            "talla":"M",
+            "marca":"Nike"  
+        },
+        {
+            "serialNumber":4,
+            "name":"Water coat",
+            "description":"Abrigo tipo water",
+            "price":80,
+            "tax":21,
+            "images":"../../img/watercoat.jpg",
+            "tejido":"algodon",
+            "talla":"XL",
+            "marca":"Nike"  
+        }
+    ],
+    "joyas": [
+        {
+            "serialNumber":5,
+            "name":"Cielo",
+            "description":"Anillo cielo",
+            "price":1000,
+            "tax":21,
+            "images":"../../img/diamante.jpg",
+            "material":"zafiro",
+            "talla":"S",
+            "marca":"swarowski",
+            "tipo":"anillo"
+        },
+        {
+            "serialNumber":6,
+            "name":"Macarena",
+            "description":"Anillo esperanza",
+            "price":1000,
+            "tax":21,
+            "images":"../../img/macarena.jpg",
+            "material":"esmeralda",
+            "talla":"M",
+            "marca":"swarowski",
+            "tipo":"anillo"
+        },
+        {
+            "serialNumber":7,
+            "name":"Mar",
+            "description":"Anillo mar",
+            "price":1000,
+            "tax":21,
+            "images":"../../img/zafiro.jpg",
+            "material":"zafiro",
+            "talla":"S",
+            "marca":"swarowski",
+            "tipo":"anillo"
+        }
+    ],
+    "instrumentos": [
+        {
+            "serialNumber":8,
+            "name":"Guitarra",
+            "description":"Guitarra española",
+            "price":150,
+            "tax":21,
+            "images":"../../img/guitarra.jpg",
+            "tipo":"cuerda",
+            "color":"marron"       
+        },
+        {
+            "serialNumber":9,
+            "name":"Tambor",
+            "description":"Tambor español",
+            "price":70,
+            "tax":21,
+            "images":"../../img/tambor.jpg",
+            "tipo":"percusion",
+            "color":"blanco"       
+        },
+        {
+            "serialNumber":10,
+            "name":"Flauta",
+            "description":"Flauta española",
+            "price":30,
+            "tax":21,
+            "images":"../../img/flauta.jpg",
+            "tipo":"viento",
+            "color":"verde"       
+        }
+    ]
+
+}
+
+
+
